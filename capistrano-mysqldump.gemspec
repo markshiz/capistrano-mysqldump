@@ -8,10 +8,10 @@ Gem::Specification.new do |s|
   s.version = "1.0.10"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Alex Farrill"]
+  s.authors = ["Mark Schisler"]
   s.date = "2012-01-21"
   s.description = ""
-  s.email = "alex.farrill@gmail.com"
+  s.email = "mark.schisler@gmail.com"
   s.extra_rdoc_files = [
     "LICENSE.txt",
     "README"
@@ -28,7 +28,7 @@ Gem::Specification.new do |s|
     "test/helper.rb",
     "test/test_capistrano-mysqldump.rb"
   ]
-  s.homepage = "http://github.com/alexfarrill/capistrano-mysqldump"
+  s.homepage = "http://github.com/markshiz/capistrano-mysqldump"
   s.licenses = ["MIT"]
   s.require_paths = ["lib"]
   s.rubygems_version = "1.8.10"
