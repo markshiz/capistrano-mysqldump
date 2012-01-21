@@ -62,6 +62,7 @@ Capistrano::Configuration.instance.load do
 
       mysql_cmd = "mysql -u#{username}"
       mysql_cmd += " -p#{password}" if password 
+      mysql_cmd += " -h#{host} "
 
       case mysql_location
       when :remote
