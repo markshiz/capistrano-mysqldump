@@ -53,12 +53,12 @@ Capistrano::Configuration.instance.load do
       end
     end
 
-    task :import do
+    task :import, :roles => :web do
       setup 
       config = YAML.load_file("config/database.yml")[rails_env.to_s]
       username, password, database, host = config.values_at *%w( username password database host )
       puts "import to host: #{host}"
-      set :mysql_location, host == "localhost" ? :local : :remote unless exists?(:mysqldump_location)
+      set :mysql_location, host == "localhost" ? :local : :remote unless exists?(:mysql_location)
 
       mysql_cmd = "mysql -u#{username}"
       mysql_cmd += " -p#{password}" if password 
@@ -66,13 +66,14 @@ Capistrano::Configuration.instance.load do
 
       case mysql_location
       when :remote
+        `gzip #{mysqldump_local_filename}`
         upload mysqldump_local_filename_gz, mysqldump_remote_filename_gz, :via => :scp
         run "gunzip #{mysqldump_remote_filename_gz}"
-        run "#{mysql_cmd} #{database} < #{mysql_remote_filename}" do |ch, stream, out|
+        run "#{mysql_cmd} #{database} < #{mysqldump_remote_filename}" do |ch, stream, out|
           ch.send_data "#{password}\n" if out =~ /^Enter password:/
         end
         run "rm #{mysqldump_remote_filename}"
-        
+        `rm #{mysqldump_local_filename_gz}`
       when :local
         `#{mysql_cmd} -e "drop database #{database}; create database #{database}"`
         `#{mysql_cmd} #{database} < #{mysqldump_local_filename}`
