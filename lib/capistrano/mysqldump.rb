@@ -13,7 +13,7 @@ Capistrano::Configuration.instance.load do
       set :mysqldump_bin, "/usr/local/mysql/bin/mysqldump" unless exists?(:mysqldump_bin)
       set :mysqldump_remote_tmp_dir, "/tmp" unless exists?(:mysqldump_remote_tmp_dir)
       set :mysqldump_local_tmp_dir, "/tmp" unless exists?(:mysqldump_local_tmp_dir)
-      set :mysqldump_location, host || host == "localhost" ? :local : :remote unless exists?(:mysqldump_location)
+      set :mysqldump_location, host == "localhost" ? :local : :remote unless exists?(:mysqldump_location)
 
       # for convenience
       set :mysqldump_filename, "%s.sql" % application
@@ -58,7 +58,7 @@ Capistrano::Configuration.instance.load do
       config = YAML.load_file("config/database.yml")[rails_env.to_s]
       username, password, database, host = config.values_at *%w( username password database host )
       puts "import to host: #{host}"
-      set :mysql_location, host || host == "localhost" ? :local : :remote unless exists?(:mysql_location)
+      set :mysql_location, host == "localhost" ? :local : :remote unless exists?(:mysqldump_location)
 
       mysql_cmd = "mysql -u#{username}"
       mysql_cmd += " -p#{password}" if password 

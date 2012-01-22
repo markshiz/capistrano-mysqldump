@@ -5,11 +5,11 @@
 
 Gem::Specification.new do |s|
   s.name = "capistrano-mysqldump"
-  s.version = "1.0.11"
+  s.version = "1.0.12"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
   s.authors = ["Mark Schisler"]
-  s.date = "2012-01-21"
+  s.date = "2012-01-22"
   s.description = ""
   s.email = "mark.schisler@gmail.com"
   s.extra_rdoc_files = [
